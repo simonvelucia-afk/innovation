@@ -202,16 +202,23 @@
       background:#081018;
       overflow:hidden;
       padding:14px;
-      min-height:1040px;
+      position:relative;
     }
     .dashboard-shell{
-      height:100%;
-      min-height:1010px;
       border-radius:20px;
       overflow:hidden;
       border:1px solid rgba(255,255,255,.08);
       background:#050b11;
       box-shadow:inset 0 0 0 1px rgba(255,255,255,.03), 0 18px 40px rgba(0,0,0,.26);
+      display:flex;
+      flex-direction:column;
+    }
+    .dashboard-iframe-wrap{
+      position:relative;
+      width:100%;
+      flex:1;
+      overflow:hidden;
+      /* hauteur = ratio 16/10 par rapport à la largeur du conteneur */
     }
     .dashboard-toolbar{
       display:flex;
@@ -258,16 +265,16 @@
       font:inherit;
     }
     .media-dashboard iframe{
-      width:200%;
-      height:200%;
+      position:absolute;
+      top:0; left:0;
+      width:1280px;
+      height:800px;
       border:none;
       display:block;
       pointer-events:none;
       background:#081018;
-      transform:scale(.5);
       transform-origin:top left;
       filter:brightness(.96) contrast(1.03);
-      overflow:hidden;
     }
     .dashboard-modal{
       position:fixed;
@@ -1008,11 +1015,14 @@
                   </button>
                 </div>
               </div>
+              <div class="dashboard-iframe-wrap" id="dashboardPreviewWrap">
               <iframe
                 src="https://simonvelucia-afk.github.io/modulimo-dashboard/"
                 loading="lazy"
-                title="Dashboard MODULIMO">
+                title="Dashboard MODULIMO"
+                id="dashboardPreviewFrame">
               </iframe>
+              </div>
             </div>
           </div>
           <div class="card-pad">
@@ -1279,6 +1289,21 @@
         observer.observe(el);
       });
 
+
+      // Scale adaptatif du dashboard preview
+      const DASH_W = 1280, DASH_H = 800;
+      function scaleDashPreview() {
+        const wrap = document.getElementById('dashboardPreviewWrap');
+        const frame = document.getElementById('dashboardPreviewFrame');
+        if (!wrap || !frame) return;
+        const containerW = wrap.offsetWidth;
+        const scale = containerW / DASH_W;
+        const scaledH = Math.round(DASH_H * scale);
+        wrap.style.height = scaledH + 'px';
+        frame.style.transform = 'scale(' + scale + ')';
+      }
+      scaleDashPreview();
+      window.addEventListener('resize', scaleDashPreview);
 
     })();
   </script>
