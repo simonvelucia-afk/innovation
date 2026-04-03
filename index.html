@@ -200,9 +200,7 @@
     }
     .media-dashboard{
       background:#081018;
-      overflow:hidden;
       padding:14px;
-      position:relative;
     }
     .dashboard-shell{
       border-radius:20px;
@@ -216,9 +214,8 @@
     .dashboard-iframe-wrap{
       position:relative;
       width:100%;
-      flex:1;
       overflow:hidden;
-      /* hauteur = ratio 16/10 par rapport à la largeur du conteneur */
+      /* hauteur calculée dynamiquement par JS */
     }
     .dashboard-toolbar{
       display:flex;
@@ -267,8 +264,6 @@
     .media-dashboard iframe{
       position:absolute;
       top:0; left:0;
-      width:1280px;
-      height:800px;
       border:none;
       display:block;
       pointer-events:none;
@@ -991,43 +986,49 @@
     <section class="block" id="mobility">
       <div class="smallcaps"><span data-lang="fr">Pilier 04</span><span data-lang="en">Pillar 04</span></div>
       <h2 class="section-title"><span data-lang="fr">Mobilité légère intégrée</span><span data-lang="en">Integrated light mobility</span></h2>
-      <div class="grid-3">
+
+      <!-- Dashboard pleine largeur -->
+      <article class="panel" style="margin-bottom:18px;">
+        <div class="media-dashboard">
+          <div class="dashboard-shell">
+            <div class="dashboard-toolbar">
+              <span class="dashboard-dot"></span>
+              <span class="dashboard-dot"></span>
+              <span class="dashboard-dot"></span>
+              <div class="dashboard-actions">
+                <a class="dashboard-link" href="https://simonvelucia-afk.github.io/modulimo-dashboard/" target="_blank" rel="noopener">
+                  <span data-lang="fr">Ouvrir la démo</span><span data-lang="en">Open demo</span>
+                </a>
+                <button class="dashboard-link dashboard-fullscreen-btn" type="button" data-dashboard-fullscreen="https://simonvelucia-afk.github.io/modulimo-dashboard/">
+                  <span data-lang="fr">Plein écran</span><span data-lang="en">Fullscreen</span>
+                </button>
+              </div>
+            </div>
+            <div class="dashboard-iframe-wrap" id="dashboardPreviewWrap">
+              <iframe
+                src="https://simonvelucia-afk.github.io/modulimo-dashboard/"
+                loading="lazy"
+                title="Dashboard MODULIMO"
+                id="dashboardPreviewFrame"
+                allow="scripts; same-origin"
+                sandbox="allow-scripts allow-same-origin allow-forms">
+              </iframe>
+            </div>
+          </div>
+        </div>
+        <div class="card-pad">
+          <h3><span data-lang="fr">Interface de pilotage</span><span data-lang="en">Driving interface</span></h3>
+          <p class="section-text"><span data-lang="fr">Le dashboard MODULIMO illustre une première direction d’interface pour le pilotage, l’assistance et la supervision des futurs vélomobiles. La démo peut être ouverte séparément pour une consultation en plein écran.</span><span data-lang="en">The MODULIMO dashboard illustrates an initial interface direction for driving, assistance, and supervision of future velomobiles. The demo can be opened separately for full-screen viewing.</span></p>
+        </div>
+      </article>
+
+      <!-- 3 cards en dessous -->
+      <div class="grid-3" style="margin-bottom:18px;">
         <article class="panel">
           <div class="media"><img src="images/concept_velomobile.webp" alt="Concept de vélomobile" /></div>
           <div class="card-pad">
             <h3><span data-lang="fr">Direction de design</span><span data-lang="en">Design direction</span></h3>
             <p class="section-text"><span data-lang="fr">MODULIMO développe une réflexion sur la mobilité légère fermée, pensée pour mieux relier le bâtiment, le quotidien et certains usages climatiques exigeants.</span><span data-lang="en">MODULIMO is developing a line of thinking around enclosed light mobility, designed to better connect the building, daily life, and certain demanding climate conditions.</span></p>
-          </div>
-        </article>
-        <article class="panel" style="grid-column:span 2">
-          <div class="media media-dashboard">
-            <div class="dashboard-shell">
-              <div class="dashboard-toolbar">
-                <span class="dashboard-dot"></span>
-                <span class="dashboard-dot"></span>
-                <span class="dashboard-dot"></span>
-                <div class="dashboard-actions">
-                  <a class="dashboard-link" href="https://simonvelucia-afk.github.io/modulimo-dashboard/" target="_blank" rel="noopener">
-                    <span data-lang="fr">Ouvrir la démo</span><span data-lang="en">Open demo</span>
-                  </a>
-                  <button class="dashboard-link dashboard-fullscreen-btn" type="button" data-dashboard-fullscreen="https://simonvelucia-afk.github.io/modulimo-dashboard/">
-                    <span data-lang="fr">Plein écran</span><span data-lang="en">Fullscreen</span>
-                  </button>
-                </div>
-              </div>
-              <div class="dashboard-iframe-wrap" id="dashboardPreviewWrap">
-              <iframe
-                src="https://simonvelucia-afk.github.io/modulimo-dashboard/"
-                loading="lazy"
-                title="Dashboard MODULIMO"
-                id="dashboardPreviewFrame">
-              </iframe>
-              </div>
-            </div>
-          </div>
-          <div class="card-pad">
-            <h3><span data-lang="fr">Interface de pilotage</span><span data-lang="en">Driving interface</span></h3>
-            <p class="section-text"><span data-lang="fr">Le dashboard MODULIMO illustre une première direction d’interface pour le pilotage, l’assistance et la supervision des futurs vélomobiles. La démo peut être ouverte séparément pour une consultation en plein écran.</span><span data-lang="en">The MODULIMO dashboard illustrates an initial interface direction for driving, assistance, and supervision of future velomobiles. The demo can be opened separately for full-screen viewing.</span></p>
           </div>
         </article>
         <article class="panel">
@@ -1037,25 +1038,23 @@
             <p class="section-text"><span data-lang="fr">Cette composante demeure en développement conceptuel, mais elle renforce la cohérence d’ensemble du système MODULIMO en liant habitat, déplacement et infrastructure.</span><span data-lang="en">This component remains in conceptual development, but it strengthens the overall coherence of the MODULIMO system by linking housing, movement, and infrastructure.</span></p>
           </div>
         </article>
-      </div>
-
-      <div class="grid-2" style="margin-top:18px;">
         <article class="panel">
           <div class="media"><img src="images/vue_ar_velom.webp" alt="Capacité arrière du véhicule" /></div>
           <div class="card-pad">
             <p class="section-text"><span data-lang="fr">Les capacités utilitaires, de transport léger ou d’emport font partie des pistes explorées pour augmenter la valeur fonctionnelle du véhicule dans un contexte résidentiel.</span><span data-lang="en">Utility, light transport, and carrying capacity are among the paths explored to increase the vehicle’s functional value in a residential context.</span></p>
           </div>
         </article>
-        <article class="band">
-          <div class="smallcaps"><span data-lang="fr">Rôle stratégique</span><span data-lang="en">Strategic role</span></div>
-          <p class="section-text soft"><span data-lang="fr">La mobilité n’est pas présentée comme un élément isolé. Elle constitue une extension naturelle du bâtiment, du logiciel et des services, dans une logique d’intégration verticale rare sur le marché.</span><span data-lang="en">Mobility is not presented as an isolated element. It is a natural extension of the building, software, and services, within a vertically integrated logic that is rare in the market.</span></p>
-          <div class="premium-image-card">
-            <img src="images/iso_concept_ultime.webp" alt="Vélomobile MODULIMO" />
-            <button class="media-open-btn premium-open-btn" type="button" data-image-fullscreen="images/iso_concept_ultime.webp">
-              <span data-lang="fr">Voir en plein écran</span><span data-lang="en">View full screen</span>
-            </button>
-          </div>
-        </article>
+      </div>
+
+      <div class="band">
+        <div class="smallcaps"><span data-lang="fr">Rôle stratégique</span><span data-lang="en">Strategic role</span></div>
+        <p class="section-text soft"><span data-lang="fr">La mobilité n’est pas présentée comme un élément isolé. Elle constitue une extension naturelle du bâtiment, du logiciel et des services, dans une logique d’intégration verticale rare sur le marché.</span><span data-lang="en">Mobility is not presented as an isolated element. It is a natural extension of the building, software, and services, within a vertically integrated logic that is rare in the market.</span></p>
+        <div class="premium-image-card">
+          <img src="images/iso_concept_ultime.webp" alt="Vélomobile MODULIMO" />
+          <button class="media-open-btn premium-open-btn" type="button" data-image-fullscreen="images/iso_concept_ultime.webp">
+            <span data-lang="fr">Voir en plein écran</span><span data-lang="en">View full screen</span>
+          </button>
+        </div>
       </div>
     </section>
 
@@ -1296,14 +1295,29 @@
         const wrap = document.getElementById('dashboardPreviewWrap');
         const frame = document.getElementById('dashboardPreviewFrame');
         if (!wrap || !frame) return;
-        const containerW = wrap.offsetWidth;
+        const containerW = wrap.getBoundingClientRect().width || wrap.offsetWidth;
+        if (containerW < 10) return;
         const scale = containerW / DASH_W;
         const scaledH = Math.round(DASH_H * scale);
         wrap.style.height = scaledH + 'px';
+        frame.style.width = DASH_W + 'px';
+        frame.style.height = DASH_H + 'px';
         frame.style.transform = 'scale(' + scale + ')';
+        frame.style.transformOrigin = 'top left';
       }
-      scaleDashPreview();
+      // Appel immédiat + après layout
+      requestAnimationFrame(function() {
+        scaleDashPreview();
+        requestAnimationFrame(scaleDashPreview);
+      });
+      window.addEventListener('load', scaleDashPreview);
       window.addEventListener('resize', scaleDashPreview);
+      // ResizeObserver pour les changements de layout
+      if (typeof ResizeObserver !== 'undefined') {
+        const ro = new ResizeObserver(scaleDashPreview);
+        const wrap = document.getElementById('dashboardPreviewWrap');
+        if (wrap) ro.observe(wrap);
+      }
 
     })();
   </script>
