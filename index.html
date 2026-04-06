@@ -734,13 +734,9 @@
         <span></span><span></span><span></span>
       </button>
       <nav class="nav" id="siteNav">
-        <a href="#thesis"><span data-lang="fr">Thèse</span><span data-lang="en">Thesis</span><span data-lang="es">Tesis</span></a>
-        <a href="#software"><span data-lang="fr">Logiciel</span><span data-lang="en">Software</span><span data-lang="es">Software</span></a>
-        <a href="#build"><span data-lang="fr">Construction</span><span data-lang="en">Construction</span><span data-lang="es">Construcción</span></a>
-        <a href="#living"><span data-lang="fr">Habitation</span><span data-lang="en">Living</span><span data-lang="es">Vivienda</span></a>
-        <a href="#family"><span data-lang="fr">Familles</span><span data-lang="en">Families</span><span data-lang="es">Familias</span></a>
-        <a href="#mobility"><span data-lang="fr">Mobilité</span><span data-lang="en">Mobility</span><span data-lang="es">Movilidad</span></a>
-        <a href="#lab"><span data-lang="fr">Laboratoire</span><span data-lang="en">Lab</span><span data-lang="es">Lab</span></a>
+        <a href="#commercialises"><span data-lang="fr">Produits commercialisés</span><span data-lang="en">Available products</span><span data-lang="es">Productos disponibles</span></a>
+        <a href="#court-terme"><span data-lang="fr">Innovation court terme</span><span data-lang="en">Near-term innovation</span><span data-lang="es">Innovación próxima</span></a>
+        <a href="#ambitieux"><span data-lang="fr">Innovation ambitieuse</span><span data-lang="en">Ambitious innovation</span><span data-lang="es">Innovación ambiciosa</span></a>
         <button class="lang-btn" data-set-lang="fr" aria-label="Afficher en français">FR</button>
         <button class="lang-btn" data-set-lang="en" aria-label="Display in English">EN</button>
         <button class="lang-btn" data-set-lang="es" aria-label="Mostrar en español">ES</button>
@@ -756,6 +752,7 @@
             <div class="eyebrow">
               <span data-lang="fr">Innovation modulaire • Logiciel • Construction • Mobilité</span>
               <span data-lang="en">Modular innovation • Software • Construction • Mobility</span>
+              <span data-lang="es">Innovación modular • Software • Construcción • Movilidad</span>
             </div>
 
             <h1>
@@ -776,6 +773,7 @@
               <a class="btn" href="#lab">
                 <span data-lang="fr">Explorer l’innovation</span>
                 <span data-lang="en">Explore innovation</span>
+                <span data-lang="es">Explorar innovación</span>
               </a>
             </div>
 
@@ -783,10 +781,12 @@
               <span class="chip">
                 <span data-lang="fr">Démo accessible dès maintenant</span>
                 <span data-lang="en">Demo available now</span>
+                <span data-lang="es">Demo disponible ahora</span>
               </span>
               <span class="chip">
                 <span data-lang="fr">Positionnement investisseurs et partenaires</span>
                 <span data-lang="en">Investor and partner positioning</span>
+                <span data-lang="es">Posicionamiento para inversores</span>
               </span>
             </div>
           </div>
@@ -801,7 +801,7 @@
 
           <div class="hero-overlay">
             <span data-lang="fr">Plateforme opérationnelle — gestion des ressources et du milieu de vie</span>
-            <span data-lang="en">Operational platform — resource and living environment management</span>
+            <span data-lang="en">Operational platform — resource and living environment management</span><span data-lang="es">Plataforma operacional — gestión de recursos y entorno residencial</span>
           </div>
         </div>
       </div>
@@ -860,7 +860,7 @@
       </div>
     </section>
 
-    <section class="block" id="software">
+    <section class="block" id="commercialises">
       <div class="grid-2">
         <div class="panel card-pad">
           <div class="smallcaps"><span data-lang="fr">Pilier 01</span><span data-lang="en">Pillar 01</span></div>
@@ -921,7 +921,7 @@
       </div>
     </section>
 
-    <section class="block" id="living">
+    <section class="block" id="court-terme">
       <div class="smallcaps"><span data-lang="fr">Pilier 03</span><span data-lang="en">Pillar 03</span></div>
       <h2 class="section-title"><span data-lang="fr">Habitation familiale, services et qualité d’usage</span><span data-lang="en">Family housing, services, and quality of use</span></h2>
       <div class="grid-3">
@@ -1022,7 +1022,7 @@
       </div>
     </section>
 
-    <section class="block" id="mobility">
+    <section class="block" id="ambitieux">
       <div class="smallcaps"><span data-lang="fr">Pilier 04</span><span data-lang="en">Pillar 04</span></div>
       <h2 class="section-title"><span data-lang="fr">Mobilité légère intégrée</span><span data-lang="en">Integrated light mobility</span></h2>
 
@@ -1354,6 +1354,36 @@
         if (wrap) ro.observe(wrap);
       }
 
+    })();
+  </script>
+
+  <script>
+    // Fallback ES → FR pour les éléments sans traduction espagnole
+    (function() {
+      function applyEsFallback() {
+        var lang = document.documentElement.className;
+        if (lang.indexOf('lang-es') === -1) return;
+        // Pour chaque élément qui contient des spans data-lang
+        var parents = document.querySelectorAll('[data-lang="fr"]');
+        parents.forEach(function(frEl) {
+          var parent = frEl.parentElement;
+          if (!parent) return;
+          var hasEs = parent.querySelector('[data-lang="es"]');
+          if (!hasEs) {
+            // Pas de traduction ES → montrer le FR
+            frEl.style.display = '';
+          }
+        });
+      }
+      // Appliquer au chargement et à chaque changement de langue
+      document.addEventListener('DOMContentLoaded', applyEsFallback);
+      // Observer les changements de class sur html
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(m) {
+          if (m.attributeName === 'class') applyEsFallback();
+        });
+      });
+      observer.observe(document.documentElement, { attributes: true });
     })();
   </script>
 </body>
