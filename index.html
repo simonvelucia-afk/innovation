@@ -72,7 +72,7 @@
       flex-shrink:0;
     }
     .brand-logo img{
-      height:52px;
+      height:44px;
       width:auto;
       display:block;
       object-fit:contain;
@@ -1220,6 +1220,12 @@
     </div>
   </div>
 
+  <!-- Modal logo dédié -->
+  <div id="logoModal" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);align-items:center;justify-content:center;" aria-hidden="true">
+    <button id="logoModalClose" type="button" style="position:absolute;top:20px;right:20px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:50%;width:44px;height:44px;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:1;">&#x2715;</button>
+    <img src="images/Logo_Produits_Modulimo.png" alt="MODULIMO" style="max-width:90vw;max-height:80vh;object-fit:contain;border-radius:10px;box-shadow:0 12px 60px rgba(0,0,0,.7);" />
+  </div>
+
 
   <a class="minette-anchor" id="minetteAnchor" href="#top" aria-label="Minette">
     <div class="minette-badge"><span data-lang="fr">Minette</span><span data-lang="en">Minette</span></div>
@@ -1337,13 +1343,31 @@
         document.body.style.overflow = '';
       }
 
-      // Logo → plein écran
+      // Logo → plein écran (modal dédié)
+      const logoModal = document.getElementById('logoModal');
+      const logoModalClose = document.getElementById('logoModalClose');
       const logoBtn = document.getElementById('logoBtn');
-      if (logoBtn) {
-        logoBtn.addEventListener('click', function() {
-          openImageModal('images/Logo_Produits_Modulimo.png');
-        });
+
+      function openLogoModal() {
+        if (!logoModal) return;
+        logoModal.style.display = 'flex';
+        logoModal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
       }
+      function closeLogoModal() {
+        if (!logoModal) return;
+        logoModal.style.display = 'none';
+        logoModal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+      if (logoBtn) logoBtn.addEventListener('click', openLogoModal);
+      if (logoModalClose) logoModalClose.addEventListener('click', closeLogoModal);
+      if (logoModal) logoModal.addEventListener('click', function(e) {
+        if (e.target === logoModal) closeLogoModal();
+      });
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeLogoModal();
+      });
 
       document.querySelectorAll('[data-image-fullscreen]').forEach(btn => {
         btn.addEventListener('click', function() {
