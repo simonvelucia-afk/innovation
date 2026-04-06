@@ -72,15 +72,17 @@
       flex-shrink:0;
     }
     .brand-logo img{
-      height:104px;
+      height:52px;
       width:auto;
       display:block;
       object-fit:contain;
       filter:drop-shadow(0 2px 8px rgba(0,0,0,.4));
-      transition:opacity .2s ease;
+      transition:opacity .2s ease, transform .2s ease;
+      cursor:zoom-in;
     }
     .brand-logo:hover img{
       opacity:.85;
+      transform:scale(1.04);
     }
     .menu-toggle{
       display:none;
@@ -751,9 +753,9 @@
 <body id="top">
   <header class="topbar" id="top">
     <div class="topbar-inner">
-      <a href="https://www.modulimo.com" class="brand-logo" target="_blank" rel="noopener" aria-label="MODULIMO">
+      <button type="button" class="brand-logo" id="logoBtn" aria-label="MODULIMO — voir le logo">
         <img src="images/Logo_Produits_Modulimo.png" alt="MODULIMO" />
-      </a>
+      </button>
       <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="siteNav" aria-label="Open menu">
         <span></span><span></span><span></span>
       </button>
@@ -1332,6 +1334,14 @@
         imageModal.setAttribute('aria-hidden', 'true');
         imageModalTarget.src = '';
         document.body.style.overflow = '';
+      }
+
+      // Logo → plein écran
+      const logoBtn = document.getElementById('logoBtn');
+      if (logoBtn) {
+        logoBtn.addEventListener('click', function() {
+          openImageModal('images/Logo_Produits_Modulimo.png');
+        });
       }
 
       document.querySelectorAll('[data-image-fullscreen]').forEach(btn => {
