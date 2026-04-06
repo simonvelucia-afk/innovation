@@ -621,6 +621,30 @@
       border-radius:24px; line-height:1.75; color:#f4e7bd;
     }
     .smallcaps{text-transform:uppercase;letter-spacing:.12em;font-size:.78rem;color:var(--accent2);margin-bottom:8px}
+    .section-banner{
+      background:var(--accent);
+      color:#fff;
+      padding:18px 28px 16px;
+      border-radius:10px;
+      margin-bottom:32px;
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+    .section-banner .banner-label{
+      font-size:.72rem;
+      font-weight:700;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      opacity:.75;
+      white-space:nowrap;
+    }
+    .section-banner h2{
+      font-size:1.05rem;
+      font-weight:700;
+      margin:0;
+      letter-spacing:.02em;
+    }
     .section-title{
       margin:0 0 10px;
       font-size:clamp(1.55rem,3vw,2.5rem);
@@ -861,6 +885,10 @@
     </section>
 
     <section class="block" id="commercialises">
+      <div class="section-banner">
+        <span class="banner-label">01</span>
+        <h2><span data-lang="fr">Produits commercialisés</span><span data-lang="en">Available products</span><span data-lang="es">Productos disponibles</span></h2>
+      </div>
       <div class="grid-2">
         <div class="panel card-pad">
           <div class="smallcaps"><span data-lang="fr">Pilier 01</span><span data-lang="en">Pillar 01</span></div>
@@ -922,7 +950,11 @@
     </section>
 
     <section class="block" id="court-terme">
-      <div class="smallcaps"><span data-lang="fr">Pilier 03</span><span data-lang="en">Pillar 03</span></div>
+      <div class="section-banner">
+        <span class="banner-label">02</span>
+        <h2><span data-lang="fr">Innovation court terme</span><span data-lang="en">Near-term innovation</span><span data-lang="es">Innovación próxima</span></h2>
+      </div>
+      <div class="smallcaps"><span data-lang="fr">Pilier 03</span><span data-lang="en">Pillar 03</span><span data-lang="es">Pilar 03</span></div>
       <h2 class="section-title"><span data-lang="fr">Habitation familiale, services et qualité d’usage</span><span data-lang="en">Family housing, services, and quality of use</span></h2>
       <div class="grid-3">
         <article class="panel">
@@ -1023,7 +1055,11 @@
     </section>
 
     <section class="block" id="ambitieux">
-      <div class="smallcaps"><span data-lang="fr">Pilier 04</span><span data-lang="en">Pillar 04</span></div>
+      <div class="section-banner">
+        <span class="banner-label">03</span>
+        <h2><span data-lang="fr">Innovation ambitieuse</span><span data-lang="en">Ambitious innovation</span><span data-lang="es">Innovación ambiciosa</span></h2>
+      </div>
+      <div class="smallcaps"><span data-lang="fr">Pilier 04</span><span data-lang="en">Pillar 04</span><span data-lang="es">Pilar 04</span></div>
       <h2 class="section-title"><span data-lang="fr">Mobilité légère intégrée</span><span data-lang="en">Integrated light mobility</span></h2>
 
       <!-- Dashboard pleine largeur -->
@@ -1358,32 +1394,32 @@
   </script>
 
   <script>
-    // Fallback ES → FR pour les éléments sans traduction espagnole
+    /* Fallback ES → FR : si un parent contient du [data-lang="fr"] mais pas de [data-lang="es"],
+       on laisse le CSS gérer via la classe .no-es ajoutée ici au chargement */
     (function() {
       function applyEsFallback() {
-        var lang = document.documentElement.className;
-        if (lang.indexOf('lang-es') === -1) return;
-        // Pour chaque élément qui contient des spans data-lang
-        var parents = document.querySelectorAll('[data-lang="fr"]');
-        parents.forEach(function(frEl) {
-          var parent = frEl.parentElement;
-          if (!parent) return;
-          var hasEs = parent.querySelector('[data-lang="es"]');
-          if (!hasEs) {
-            // Pas de traduction ES → montrer le FR
+        if (document.documentElement.classList.contains('lang-es')) {
+          document.querySelectorAll('[data-lang="fr"]').forEach(function(frEl) {
+            var parent = frEl.parentElement;
+            if (parent && !parent.querySelector('[data-lang="es"]')) {
+              frEl.style.display = 'inline';
+            } else {
+              frEl.style.display = '';
+            }
+          });
+        } else {
+          // Reset any forced inline display when switching away from ES
+          document.querySelectorAll('[data-lang="fr"]').forEach(function(frEl) {
             frEl.style.display = '';
-          }
-        });
+          });
+        }
       }
-      // Appliquer au chargement et à chaque changement de langue
       document.addEventListener('DOMContentLoaded', applyEsFallback);
-      // Observer les changements de class sur html
-      var observer = new MutationObserver(function(mutations) {
+      new MutationObserver(function(mutations) {
         mutations.forEach(function(m) {
           if (m.attributeName === 'class') applyEsFallback();
         });
-      });
-      observer.observe(document.documentElement, { attributes: true });
+      }).observe(document.documentElement, { attributes: true });
     })();
   </script>
 </body>
